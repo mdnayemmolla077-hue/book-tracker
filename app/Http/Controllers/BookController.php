@@ -33,4 +33,28 @@ class BookController extends Controller
 
         return redirect()->route('books.index');
     }
+
+     public function destroy(Book $book)
+   {
+    $book->delete();
+
+    return redirect()->route('books.index');
+    }
+    public function edit(Book $book)
+    {
+    return view('books.edit', compact('book'));
+    }
+
+    public function update(Request $request, Book $book)
+  {
+    $request->validate([
+        'title' => 'required',
+        'author' => 'required',
+        'status' => 'required',
+    ]);
+
+    $book->update($request->all());
+
+    return redirect()->route('books.index');
+  }
 }
