@@ -7,11 +7,12 @@ use Illuminate\Http\Request;
 
 class BookController extends Controller
 {
-    public function index()
-    {
-        $books = Book::all();
-        return view('books.index', compact('books'));
-    }
+   public function index() {
+    // WRONG: Book::all(); (Shows everyone's books)
+    // RIGHT: Only shows books for the logged-in user
+    $books = auth()->user()->books; 
+    return view('books.index', compact('books'));
+}
 
     public function create()
     {
@@ -20,16 +21,14 @@ class BookController extends Controller
 
     public function store(Request $request)
     {
-        $request->validate([
-            'title' => 'required',
-            'author' => 'required',
-        ]);
+        $request->user()->books()->create($request->all());
+     return redirect()->route('books.index');
 
-        Book::create([
-            'title' => $request->title,
-            'author' => $request->author,
-            'status' => 'reading',
-        ]);
+        $request->user()->books()->create([
+    'title' => $request->title,
+    'author' => $request->author,
+    'status' => 'reading',
+         ]);
 
         return redirect()->route('books.index');
     }
@@ -42,8 +41,11 @@ class BookController extends Controller
     }
     public function edit(Book $book)
     {
-    return view('books.edit', compact('book'));
+    if ($book->user_id !== auth()->id()) {
+        abort(403, 'Unauthorized action.');
     }
+    return view('books.edit', compact('book'));
+}
 
     public function update(Request $request, Book $book)
   {

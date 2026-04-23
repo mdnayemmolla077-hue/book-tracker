@@ -12,4 +12,8 @@ class Book extends Model
         'status',
         'rating',
     ];
+
+public function user() {
+    return $this->belongsTo(User::class);
+}
 }
