@@ -6,19 +6,19 @@ use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration
 {
-    public function up(): void
-    {
-        Schema::create('books', function (Blueprint $table) {
-            $table->id();
-            $table->foreignId('user_id')->constrained()->onDelete('cascade');
-            $table->string('title');
-            $table->string('author');
-            $table->string('status')->default('reading');
-            $table->integer('rating')->nullable();
-            $table->timestamps();
-        });
-    }
-
+    public function up(): void {
+    Schema::create('books', function (Blueprint $table) {
+        $table->id();
+        $table->foreignId('user_id')->constrained()->onDelete('cascade');
+        $table->string('title');
+        $table->string('author');
+        $table->string('category')->default('Fiction'); // Expert addition
+        $table->text('description')->nullable();        // Expert addition
+        $table->string('status')->default('Reading');
+        $table->integer('rating')->default(0);          // Expert addition
+        $table->timestamps();
+    });
+}
     public function down(): void
     {
         Schema::dropIfExists('books');

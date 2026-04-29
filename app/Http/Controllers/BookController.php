@@ -4,13 +4,30 @@ namespace App\Http\Controllers;
 
 use App\Models\Book;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Http;
 
 class BookController extends Controller
 {
-   public function index() {
-    // WRONG: Book::all(); (Shows everyone's books)
-    // RIGHT: Only shows books for the logged-in user
-    $books = auth()->user()->books; 
+  public function index(Request $request) {
+    $query = auth()->user()->books();
+
+    // Search Logic
+    $query->when($request->search, function ($q) {
+        return $q->where('title', 'like', '%' . request('search') . '%')
+                 ->orWhere('author', 'like', '%' . request('search') . '%');
+    });
+
+    // Category Filter
+    $query->when($request->category, function ($q) {
+        return $q->where('category', request('category'));
+    });
+
+    // Sorting Logic
+    $sort = $request->get('sort', 'created_at');
+    $query->orderBy($sort, 'desc');
+
+    $books = $query->paginate(9)->withQueryString(); // Expert: Use pagination
+
     return view('books.index', compact('books'));
 }
 
@@ -59,4 +76,18 @@ class BookController extends Controller
 
     return redirect()->route('books.index');
   }
+  public function fetchDetails($title)
+{
+    $response = Http::get("https://www.googleapis.com/books/v1/volumes?q=" . urlencode($title));
+    
+    if ($response->successful()) {
+        $bookData = $response->json()['items'][0]['volumeInfo'];
+        return [
+            'title' => $bookData['title'],
+            'author' => $bookData['authors'][0] ?? 'Unknown',
+            'image' => $bookData['imageLinks']['thumbnail'] ?? null,
+            'description' => $bookData['description'] ?? '',
+        ];
+    }
+}
 }
