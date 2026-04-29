@@ -6,16 +6,9 @@
 
 <h1 align="center">BookTracker</h1>
 
-<p align="center">
-  <strong>A Personal Reading Management Web Application</strong>
-</p>
-
-<p align="center">
-
-</p>
 
 
-### BookTracker – Personal Reading Management Web Application
+### Personal Reading Management Web Application
 
 BookTracker is a web application designed to help users manage and organise their personal reading activities. It allows users to keep track of books they want to read, are currently reading, or have already completed. 
 
