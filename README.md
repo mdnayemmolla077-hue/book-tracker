@@ -18,9 +18,6 @@
 
 ---
 
-### BookTracker – Personal Reading Management Web Application
-... (rest of your content)
-
 
 ### BookTracker – Personal Reading Management Web Application
 
