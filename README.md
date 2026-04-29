@@ -11,12 +11,8 @@
 </p>
 
 <p align="center">
-<a href="https://github.com/mdnayemmolla077-hue/book-tracker/actions"><img src="https://github.com/mdnayemmolla077-hue/book-tracker/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://github.com/mdnayemmolla077-hue/book-tracker"><img src="https://img.shields.io/github/license/mdnayemmolla077-hue/book-tracker" alt="License"></a>
-<a href="https://github.com/mdnayemmolla077-hue/book-tracker/stargazers"><img src="https://img.shields.io/github/stars/mdnayemmolla077-hue/book-tracker" alt="Stars"></a>
-</p>
 
----
+</p>
 
 
 ### BookTracker – Personal Reading Management Web Application
